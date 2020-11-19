@@ -10,7 +10,16 @@ const ONE_PASSWORD_VERSION = '1.8.0'
 
 async function run(): Promise<void> {
   try {
-    const deviceId = core.getInput('device-id')
+    let deviceId = core.getInput('device-id')
+    if (deviceId.length === 0) {
+      if (typeof process.env['OP_DEVICE'] === 'string') {
+        deviceId = process.env['OP_DEVICE']
+      } else {
+        throw new Error(
+          'A device ID must be provided with the device-id input variable or OP_DEVICE environment variable.'
+        )
+      }
+    }
     const signInAddress = core.getInput('sign-in-address')
     const emailAddress = core.getInput('email-address')
     const masterPassword = core.getInput('master-password')

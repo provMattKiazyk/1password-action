@@ -35,7 +35,7 @@ The imported items can then be used elsewhere in your workflow.
 
 ## Inputs
 
-**Device ID:** Generate a device ID with `head -c 16 /dev/urandom | base32 | tr -d = | tr '[:upper:]' '[:lower:]'`. This should be stable across multiple workflow runs. If you're using GitHub-hosted runners you can set this as a secret, and if you're using self-hosted runners you could set it as an env var on the runner.
+**Device ID:** Generate a device ID with `head -c 16 /dev/urandom | base32 | tr -d = | tr '[:upper:]' '[:lower:]'`. This should be stable across multiple workflow runs. If you're using GitHub-hosted runners you can set this as a secret, and if you're using self-hosted runners you could set it as an OP_DEVICE environment variable on the runner.
 
 **Sign-In Address:** The full URL, with subdomain, where you sign in to 1Password.
 

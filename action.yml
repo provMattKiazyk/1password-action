@@ -3,8 +3,8 @@ description: 'Read items from a 1Password vault'
 author: 'Brandon Evans'
 inputs:
   device-id:
-    require: true
-    description: 'A base 32-encoded device ID.'
+    require: false
+    description: A base 32-encoded device ID. If this isn't provided as an input variable it must be provided as an OP_DEVICE environment variable.
   sign-in-address:
     required: true
     description: '1Password sign-in address'

@@ -23,9 +23,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./
-        id: secrets
+        id: secrets1
+        env:
+          OP_DEVICE: ${{ secrets.OP_DEVICE_ID }}
         with:
-          device-id: ${{ secrets.OP_DEVICE_ID }}
           sign-in-address: ${{ secrets.OP_SIGN_IN_ADDRESS }}
           email-address: ${{ secrets.OP_EMAIL_ADDRESS }}
           secret-key: ${{ secrets.OP_SECRET_KEY }}
@@ -33,11 +34,20 @@ jobs:
           items: |
             GitHub Action Test Vault > Test Login
             GitHub Action Test Vault > Test Password | p12
+      - uses: ./
+        id: secrets2
+        with:
+          device-id: ${{ secrets.OP_DEVICE_ID }}
+          sign-in-address: ${{ secrets.OP_SIGN_IN_ADDRESS }}
+          email-address: ${{ secrets.OP_EMAIL_ADDRESS }}
+          secret-key: ${{ secrets.OP_SECRET_KEY }}
+          master-password: ${{ secrets.OP_MASTER_PASSWORD }}
+          items: |
             GitHub Action Test Vault > Test Document
       - name: Verify
         run: |
-          [[ "${{ steps.secrets.outputs.test_login_username }}" == "username001" ]] || exit 1
-          [[ "${{ steps.secrets.outputs.test_login_password }}" == "password123" ]] || exit 1
-          [[ "${{ steps.secrets.outputs.p12_password }}" == "password456" ]] || exit 1
-          [[ "${{ steps.secrets.outputs.test_document_filename }}" == "Test Document.txt" ]] || exit 1
+          [[ "${{ steps.secrets1.outputs.test_login_username }}" == "username001" ]] || exit 1
+          [[ "${{ steps.secrets1.outputs.test_login_password }}" == "password123" ]] || exit 1
+          [[ "${{ steps.secrets1.outputs.p12_password }}" == "password456" ]] || exit 1
+          [[ "${{ steps.secrets2.outputs.test_document_filename }}" == "Test Document.txt" ]] || exit 1
           [[ -f "Test Document.txt" ]] || exit 1
